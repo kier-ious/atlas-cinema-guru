@@ -1,7 +1,12 @@
-export default async function Page() {
+"use client";
+
+import { SessionProvider } from "next-auth/react";
+import Layout from "@/components/Layout";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-center h-screen">
-      Hello Cinema Guru
-    </div>
+    <SessionProvider>
+      <Layout>{children}</Layout>
+    </SessionProvider>
   );
 }

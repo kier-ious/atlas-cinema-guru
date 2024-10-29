@@ -24,6 +24,7 @@
     "use-debounce": "^10.0.3"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "20.16.5",
     "@types/react": "npm:types-react@19.0.0-rc.1",
