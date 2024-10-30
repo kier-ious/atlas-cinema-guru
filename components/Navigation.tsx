@@ -9,7 +9,7 @@ interface NavigationProps {
   currentPath: string;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ isExpanded, navigateTo, currentPath }) => { // Accept new props
+const Navigation: React.FC<NavigationProps> = ({ isExpanded, navigateTo, currentPath }) => {
   const isActive = (path: string) => (currentPath === path ? 'active' : '');
 
 
@@ -40,7 +40,7 @@ const Navigation: React.FC<NavigationProps> = ({ isExpanded, navigateTo, current
               <path fillRule="evenodd" clipRule="evenodd" d="M15 27C21.6274 27 27 21.6274 27 15C27 8.37258 21.6274 3 15 3C8.37258 3 3 8.37258 3 15C3 21.6274 8.37258 27 15 27ZM16 9C16 8.44772 15.5523 8 15 8C14.4477 8 14 8.44772 14 9V15C14 15.2652 14.1054 15.5196 14.2929 15.7071L18.5355 19.9497C18.9261 20.3403 19.5592 20.3403 19.9497 19.9497C20.3403 19.5592 20.3403 18.9261 19.9497 18.5355L16 14.5858V9Z" fill="white"/>
             </svg>
           </div>
-          {isExpanded && <span className="nav-text">WatchLater</span>}
+          {isExpanded && <span className="nav-text">Watch Later</span>}
         </li>
       </ul>
     </nav>
