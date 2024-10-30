@@ -6,6 +6,10 @@
   background-color: #54F4D0;
 }
 
+/* ********************************************* */
+/* *************** NAV /SIDEBAR **************** */
+/* ********************************************* */
+
 /* Sidebar initial collapsed state */
 .sidebar {
   background-color: #1DD2AF;
@@ -15,18 +19,15 @@
   transition: width 0.3s ease;
   overflow: hidden;
 }
-
 /* Expanded sidebar */
 .sidebar.expanded {
   width: 20vw;
   max-width: 200px;
 }
-
 /* Sidebar expansion on hover */
 .sidebar:hover {
   width: 20vw;
 }
-
 .nav-item {
   display: flex;
   align-items: center;
@@ -34,19 +35,19 @@
   padding: 10px;
   cursor: pointer;
 }
-
 .nav-text {
   display: inline;
   transition: opacity 0.3s ease;
 }
-
 .sidebar.collapsed .nav-text {
   opacity: 0;
   pointer-events: none;
 }
-
 .nav-icon {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+/* ********************************************* */
+/* ************ END -- NAV /SIDEBAR ************ */
+/* ********************************************* */

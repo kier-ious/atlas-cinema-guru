@@ -6,6 +6,7 @@ import UserInfo from "./UserInfo";
 import Navigation from "./Navigation";
 import ActivityFeed from "./ActivityFeed";
 import useNavigation from "../hooks/useNavigation";
+import HomePage from "./HomePage";
 
 interface LayoutProps {
   children: ReactNode;
@@ -33,7 +34,9 @@ const Layout = ({ children }: LayoutProps) => {
         {isSidebarExpanded && <ActivityFeed />}
       </aside>
 
-      <main className="main-content">{children}</main>
+      <main className="main-content">
+        {status === "authenticated" ? <HomePage /> : children}
+      </main>
     </div>
   );
 };
