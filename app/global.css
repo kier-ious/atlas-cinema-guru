@@ -51,3 +51,25 @@
 /* ********************************************* */
 /* ************ END -- NAV /SIDEBAR ************ */
 /* ********************************************* */
+
+.home-page {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center align items */
+  padding: 20px; /* Add some padding */
+}
+
+.movies-list {
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  justify-content: center; /* Center cards horizontally */
+  gap: 20px; /* Space between cards */
+  width: 100%; /* Optional: full width */
+  max-width: 1200px; /* Optional: max width for better alignment */
+}
+
+.movie-card { /* Assuming MovieCard component has this class */
+  flex: 0 1 200px; /* Base width for each card, adjust as necessary */
+  margin: 10px; /* Optional margin */
+  text-align: center; /* Center text inside the card */
+}

@@ -9,6 +9,7 @@ interface MovieCardProps {
     genre: string;
     isFavorite: boolean;
     isWatchLater: boolean;
+    image_url: string;
   };
   onFavoriteToggle: (id: string) => void;
   onWatchLaterToggle: (id: string) => void;
@@ -17,8 +18,6 @@ interface MovieCardProps {
 const MovieCard = ({ movie, onFavoriteToggle, onWatchLaterToggle }: MovieCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const getImageUrl = (imageName: string) => `public/images/${imageName}`;
-
   return (
     <div
       className="movie-card"
@@ -26,7 +25,7 @@ const MovieCard = ({ movie, onFavoriteToggle, onWatchLaterToggle }: MovieCardPro
       onMouseLeave={() => setIsHovered(false)}
     >
       <img
-        src={getImageUrl(movie.id)}
+        src={movie.image_url} // Use image_url directly
         alt={movie.title}
         className="movie-image"
       />

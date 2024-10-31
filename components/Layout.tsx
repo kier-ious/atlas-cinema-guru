@@ -21,22 +21,27 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="layout">
+      {/* UserInfo/Headeri */}
       <header className="header">
         <UserInfo />
       </header>
 
-      <aside
-        className={`sidebar ${isSidebarExpanded ? "expanded" : "collapsed"}`}
-        onMouseEnter={() => setIsSidebarExpanded(true)}
-        onMouseLeave={() => setIsSidebarExpanded(false)}
-      >
-        <Navigation navigateTo={navigateTo} currentPath={currentPath} isExpanded={isSidebarExpanded} />
-        {isSidebarExpanded && <ActivityFeed />}
-      </aside>
+      <div className="content-wrapper" style={{ display: "flex", flexDirection: "row" }}>
+        {/* Sidebar NAV */}
+        <aside
+          className={`sidebar ${isSidebarExpanded ? "expanded" : "collapsed"}`}
+          onMouseEnter={() => setIsSidebarExpanded(true)}
+          onMouseLeave={() => setIsSidebarExpanded(false)}
+        >
+          <Navigation navigateTo={navigateTo} currentPath={currentPath} isExpanded={isSidebarExpanded} />
+          {isSidebarExpanded && <ActivityFeed />}
+        </aside>
 
-      <main className="main-content">
-        {status === "authenticated" ? <HomePage /> : children}
-      </main>
+        {/* HomePage/Main Content */}
+        <main className="main-content">
+          {status === "authenticated" ? <HomePage /> : children}
+        </main>
+      </div>
     </div>
   );
 };

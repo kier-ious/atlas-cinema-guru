@@ -18,16 +18,14 @@ const HomePage = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [watchLater, setWatchLater] = useState<string[]>([]);
 
-  const moviesPerPage = 10; 
+  const moviesPerPage = 10;
 
-  // Redirect to login if user isn’t logged in
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/login');
     }
   }, [status, router]);
 
-  // Filter movies based on search, YR, and genres
   const filterMovies = () => {
     let filtered = titles;
 
@@ -64,60 +62,94 @@ const HomePage = () => {
   const allGenres = Array.from(new Set(titles.map(movie => movie.genre)));
 
   return (
-    <div className="home-page">
-      <div className="filters">
-        <input
-          type="text"
-          placeholder="Search by title"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Min Year"
-          value={minYear || ''}
-          onChange={(e) => setMinYear(e.target.value ? parseInt(e.target.value) : undefined)}
-        />
-        <input
-          type="number"
-          placeholder="Max Year"
-          value={maxYear || ''}
-          onChange={(e) => setMaxYear(e.target.value ? parseInt(e.target.value) : undefined)}
-        />
-        <select
-          multiple
-          value={genres}
-          onChange={(e) => setGenres(Array.from(e.target.selectedOptions, option => option.value))}
-        >
-          {allGenres.map((genre) => (
-            <option key={genre} value={genre}>
-              {genre}
-            </option>
-          ))}
-        </select>
+    <main className="home-page flex flex-col items-center justify-center p-6 space-y-8">
+
+      {/* Filters */}
+      <div className="flex flex-col lg:flex-row w-full lg:items-start lg:justify-end lg:space-x-8">
+
+        {/* Search & Year Filters */}
+        <div className="flex flex-col items-end space-y-4 lg:w-1/3">
+          <input
+            type="text"
+            placeholder="Search by title"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border border-[#54F4D0] bg-[#00003C] text-white rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-[#54F4D0]"
+          />
+
+          <div className="flex space-x-4 w-full">
+            <input
+              type="number"
+              placeholder="Min Year"
+              value={minYear || ''}
+              onChange={(e) => setMinYear(e.target.value ? parseInt(e.target.value) : undefined)}
+              className="p-2 border border-[#54F4D0] bg-[#00003C] text-white rounded-lg w-1/2 focus:outline-none focus:ring-2 focus:ring-[#54F4D0]"
+            />
+            <input
+              type="number"
+              placeholder="Max Year"
+              value={maxYear || ''}
+              onChange={(e) => setMaxYear(e.target.value ? parseInt(e.target.value) : undefined)}
+              className="p-2 border border-[#54F4D0] bg-[#00003C] text-white rounded-lg w-1/2 focus:outline-none focus:ring-2 focus:ring-[#54F4D0]"
+            />
+          </div>
+        </div>
+
+        {/* Genres Filter */}
+        <div className="flex flex-col items-start w-full lg:w-1/4 lg:pl-6">
+          <div className="font-semibold text-lg text-white mb-2">Genres</div>
+          <div className="grid grid-cols-2 gap-2 w-full">
+            {allGenres.map((genre) => (
+              <button
+                key={genre}
+                value={genre}
+                onClick={() => setGenres(prev => prev.includes(genre) ? prev.filter(g => g !== genre) : [...prev, genre])}
+                className="px-4 py-2 bg-[#00003C] border border-[#54F4D0] text-white rounded-lg shadow hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-[#54F4D0]"
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
+        </div>
+
       </div>
 
-      <div className="movies-list">
+      {/* Movies List */}
+      <div className="movies-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full px-4">
         {paginatedMovies.map((movie) => (
           <MovieCard
             key={movie.id}
-            movie={{ ...movie, isFavorite: favorites.includes(movie.id), isWatchLater: watchLater.includes(movie.id) }}
+            movie={{
+              ...movie, image_url: movie.image_url || '',
+              isFavorite: favorites.includes(movie.id),
+              isWatchLater: watchLater.includes(movie.id),
+            }}
             onFavoriteToggle={toggleFavorite}
             onWatchLaterToggle={toggleWatchLater}
           />
         ))}
       </div>
 
-      <div className="pagination">
-        <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+      {/* Pagination */}
+      <div className="pagination flex items-center space-x-4 mt-4">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg disabled:opacity-50"
+        >
           Previous
         </button>
-        <span>Page {currentPage}</span>
-        <button onClick={() => setCurrentPage((prev) => prev + 1)} disabled={currentPage * moviesPerPage >= filteredMovies.length}>
+        <span className="text-white">Page {currentPage}</span>
+        <button
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+          disabled={currentPage * moviesPerPage >= filteredMovies.length}
+          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg disabled:opacity-50"
+        >
           Next
         </button>
       </div>
-    </div>
+
+    </main>
   );
 };
 
