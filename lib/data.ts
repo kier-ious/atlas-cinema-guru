@@ -244,8 +244,8 @@ export async function fetchActivities(page: number, userEmail: string) {
       ])
       .where("activities.user_id", "=", userEmail)
       .orderBy("activities.timestamp", "desc")
-      .limit(10)
-      .offset((page - 1) * 10)
+      .limit(6)
+      .offset((page - 1) * 6)
       .execute();
 
     return activities;

@@ -1,3 +1,5 @@
+"use client";
+
 import { signOut, useSession } from "next-auth/react";
 
 const UserInfo = () => {
@@ -28,7 +30,7 @@ const UserInfo = () => {
 
       {/* User Email / Welcome msg */}
       <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", color: "#000061" }}>
-        <span style={{ marginLeft: "20px" }}>Welcome, {session.user.email}</span> 
+        <span style={{ marginLeft: "20px" }}>Welcome, {session.user.email}</span>
       </div>
 
       {/* Log Out Button with SVG Icon */}

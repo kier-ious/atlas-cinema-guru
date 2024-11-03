@@ -21,7 +21,6 @@ export type Question = {
 };
 
 export type Title = {
-  image_url: string;
   id: string;
   title: string;
   synopsis: string;
