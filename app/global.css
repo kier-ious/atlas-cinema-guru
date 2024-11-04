@@ -13,7 +13,6 @@
 .sidebar {
   background-color: #1DD2AF;
   width: 6vw;
-  height: 100vh;
   max-width: 97px;
   transition: width 0.3s ease;
   overflow: hidden;
@@ -49,7 +48,6 @@
 /* ********************************************* */
 /* ************ END -- NAV /SIDEBAR ************ */
 /* ********************************************* */
-
 
 .movie-title {
   /* Ensure title is styled to not overflow */

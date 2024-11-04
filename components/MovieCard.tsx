@@ -20,14 +20,14 @@ const MovieCard = ({ movie, onFavoriteToggle, onWatchLaterToggle }: MovieCardPro
 
   return (
     <div
-      className="relative 50% 50% overflow-hidden transition-transform transform hover:scale-105 z-10"
+      className="relative overflow-hidden transition-transform transform hover:scale-105 rounded-lg border-2 border-[#54F4D0]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <img
         src={movie.image}
         alt={movie.title}
-        className="w-full h-44 object-cover rounded-lg"
+        className="w-full aspect-square object-cover rounded-t-lg"
       />
       {isHovered && (
         <div className="absolute bottom-0 w-full bg-black bg-opacity-80 text-white p-3 transition-opacity">

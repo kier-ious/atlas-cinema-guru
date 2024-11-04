@@ -9,7 +9,7 @@ const UserInfo = () => {
 
   return (
     <div className="user-info" style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "10px" }}>
-      {/* SVG Icon */}
+      {/* SVG Icon Film thing */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="33"
@@ -29,7 +29,7 @@ const UserInfo = () => {
 
 
       {/* User Email / Welcome msg */}
-      <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", color: "#000061" }}>
+      <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", color: "#00003C" }}>
         <span style={{ marginLeft: "20px" }}>Welcome, {session.user.email}</span>
       </div>
 

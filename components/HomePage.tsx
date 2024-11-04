@@ -24,7 +24,7 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [watchLater, setWatchLater] = useState<string[]>([]);
 
-  const moviesPerPage = 10;
+  const moviesPerPage = 6;
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -68,8 +68,8 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
   const allGenres = Array.from(new Set(titles.map(movie => movie.genre).filter(genre => genre)));
 
   return (
-    <main className="flex flex-col items-center px-5 w-full max-w-screen-xl mx-auto box-border">
-      <div className="w-full flex flex-col items-stretch">
+    <main className="flex flex-col items-center justify-center px-5 w-full max-w-screen-xl mx-auto box-border">
+      <div className="w-full flex flex-col items-center">
         <Filters
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

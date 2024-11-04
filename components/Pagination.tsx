@@ -11,7 +11,7 @@ const Pagination: React.FC<PaginationProps> = ({
   totalMovies,
   onPageChange,
 }) => {
-  const moviesPerPage = 6;
+  const moviesPerPage = 10;
   const totalPages = Math.ceil(totalMovies / moviesPerPage);
 
   return (
@@ -36,7 +36,7 @@ const Pagination: React.FC<PaginationProps> = ({
           Next
         </button>
       </div>
-      <span className="text-white mt-2">Page {currentPage} of {totalPages}</span>
+      <span className="text-white">Page {currentPage} of {totalPages}</span>
     </div>
   );
 };

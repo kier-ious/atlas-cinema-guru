@@ -46,7 +46,7 @@ export default function Page() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-full">
       <HomePage titles={titles} />
     </div>
   );

@@ -16,16 +16,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en">
-      <body className="antialiased bg-[#00003c] text-white">
+      <body className="antialiased bg-[#00003c] text-white overflow-x-hidden">
         <SessionProvider>
-          <div className="layout">
+          <div className="layout min-h-screen">
             <header className="header">
               <UserInfo />
             </header>
-            <div className="content-wrapper" style={{ display: "flex", flexDirection: "row" }}>
-            <Navigation />
-            <main className="main-content">
-                {children}
+            <div className="flex">
+              <div className="flex-grow-y">
+              <Navigation />
+              </div>
+            <main className="main-content p-4">
+                <div className="container">{children}</div>
               </main>
             </div>
           </div>
