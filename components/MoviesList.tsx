@@ -17,7 +17,7 @@ const MoviesList: React.FC<MoviesListProps> = ({
   onWatchLaterToggle,
 }) => {
   return (
-    <div className="movies-list grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full px-4 pt-4">
+    <div className="movies-list grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full px-4 pt-4">
       {paginatedMovies.map((movie) => (
         <MovieCard
           key={movie.id}

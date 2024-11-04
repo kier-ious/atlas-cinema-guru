@@ -20,9 +20,9 @@ export default function Navigation({ currentPath }: NavigationProps) {
 
   return (
     <aside
-      className={`sidebar h-full flex flex-col ${
-        isSidebarExpanded ? "expanded w-64" : "collapsed w-16"
-      } transition-all duration-300`}
+      className={`bg-teal-500 h-full flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
+        isSidebarExpanded ? "w-[20vw] max-w-[200px]" : "w-[6vw] max-w-[97px]"
+      }`}
       onMouseEnter={() => setIsSidebarExpanded(true)}
       onMouseLeave={() => setIsSidebarExpanded(false)}
     >
@@ -91,7 +91,7 @@ export default function Navigation({ currentPath }: NavigationProps) {
           </li>
         </ul>
         {isSidebarExpanded && (
-        <div className="mt-4 background-color">
+        <div className="mt-4">
           <ActivityFeed />
         </div>
       )}

@@ -13,21 +13,20 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-
   return (
     <html lang="en">
       <body className="antialiased bg-[#00003c] text-white overflow-x-hidden">
         <SessionProvider>
-          <div className="layout min-h-screen">
+          <div className="layout min-h-screen flex flex-col">
             <header className="header">
               <UserInfo />
             </header>
-            <div className="flex">
-              <div className="flex-grow-y">
-              <Navigation />
+            <div className="flex flex-grow">
+              <div className="flex-grow-y h-screen">
+                <Navigation />
               </div>
-            <main className="main-content p-4">
-                <div className="container">{children}</div>
+              <main className="main-content p-4 flex-grow overflow-auto">
+                {children}
               </main>
             </div>
           </div>
