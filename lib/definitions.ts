@@ -21,6 +21,7 @@ export type Question = {
 };
 
 export type Title = {
+  image: string;
   id: string;
   title: string;
   synopsis: string;

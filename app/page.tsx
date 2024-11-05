@@ -14,6 +14,10 @@ interface Title {
   image: string;
 }
 
+interface PageProps {
+  titles: Title[];
+}
+
 export default function Page() {
   const [titles, setTitles] = useState<Title[]>([]);
   const [loading, setLoading] = useState(true);

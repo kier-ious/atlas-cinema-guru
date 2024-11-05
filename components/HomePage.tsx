@@ -24,7 +24,7 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [watchLater, setWatchLater] = useState<string[]>([]);
 
-  const moviesPerPage = 6;
+  const moviesPerPage = 10;
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -32,8 +32,22 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
     }
   }, [status, router]);
 
-  const filterMovies = () => {
-    let filtered = titles;
+  // Updated Movie interface with favorited as bool
+  interface Movie extends Title {
+    image: string;
+    favorites: boolean;
+    watchLater: boolean;
+    favorited: boolean;
+  }
+
+  const filterMovies = (): Movie[] => {
+    let filtered = titles.map((title): Movie => ({
+      ...title,
+      image: title.image || '',
+      favorites: false,
+      watchLater: false,
+      favorited: false
+    }));
 
     if (searchTerm) {
       filtered = filtered.filter(movie =>
@@ -68,7 +82,7 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
   const allGenres = Array.from(new Set(titles.map(movie => movie.genre).filter(genre => genre)));
 
   return (
-    <main className="flex flex-col items-center justify-start px-5 w-full">
+    <main className="flex flex-col items-center justify-start px-5 w-full h-full">
       <div className="w-full flex flex-col items-center">
         <Filters
           searchTerm={searchTerm}

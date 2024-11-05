@@ -19,14 +19,14 @@ export default function Navigation({ currentPath }: NavigationProps) {
   const isActive = (path: string) => (currentPath === path ? "active" : "");
 
   return (
-    <aside
-      className={`bg-teal-500 h-full flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
+    <div
+      className={`bg-teal-500 h-full flex transition-all duration-300 ease-in-out overflow-hidden ${
         isSidebarExpanded ? "w-[20vw] max-w-[200px]" : "w-[6vw] max-w-[97px]"
       }`}
       onMouseEnter={() => setIsSidebarExpanded(true)}
       onMouseLeave={() => setIsSidebarExpanded(false)}
     >
-      <nav className="flex-grow">
+      <nav className="flex-grow mt-6 h-full">
         <ul>
           <li className={`nav-item ${isActive("/home")}`}>
             <Link href="/" passHref>
@@ -96,6 +96,6 @@ export default function Navigation({ currentPath }: NavigationProps) {
         </div>
       )}
       </nav>
-    </aside>
+    </div>
   );
 }

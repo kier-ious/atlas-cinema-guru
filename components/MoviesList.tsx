@@ -1,8 +1,21 @@
+"use client"
+
 import React from 'react';
 import MovieCard from './MovieCard';
 
+interface Movie {
+  id: string;
+  title: string;
+  synopsis: string;
+  released: number;
+  genre: string;
+  image: string;
+  favorited: boolean;
+  watchLater: boolean;
+}
+
 interface MoviesListProps {
-  paginatedMovies: any[];
+  paginatedMovies: Movie[];
   favorites: string[];
   watchLater: string[];
   onFavoriteToggle: (id: string) => void;
@@ -17,7 +30,7 @@ const MoviesList: React.FC<MoviesListProps> = ({
   onWatchLaterToggle,
 }) => {
   return (
-    <div className="movies-list grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full px-4 pt-4">
+    <div className="grid grid-cols-3 gap-8 w-full px-4 pt-4">
       {paginatedMovies.map((movie) => (
         <MovieCard
           key={movie.id}

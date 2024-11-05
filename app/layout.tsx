@@ -22,7 +22,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <UserInfo />
             </header>
             <div className="flex flex-grow">
-              <div className="flex-grow-y h-screen">
+              <div className="flex-grow-y">
                 <Navigation />
               </div>
               <main className="main-content p-4 flex-grow overflow-auto">
