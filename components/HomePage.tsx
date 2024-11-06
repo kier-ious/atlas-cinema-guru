@@ -20,11 +20,10 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
   const [minYear, setMinYear] = useState<number | undefined>(undefined);
   const [maxYear, setMaxYear] = useState<number | undefined>(undefined);
   const [genres, setGenres] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [favorites, setFavorites] = useState<string[]>([]);
-  const [watchLater, setWatchLater] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const moviesPerPage = 10;
+
+  const moviesPerPage = 6;
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -32,13 +31,13 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
     }
   }, [status, router]);
 
-  // Updated Movie interface with favorited as bool
   interface Movie extends Title {
     image: string;
     favorites: boolean;
     watchLater: boolean;
     favorited: boolean;
   }
+
 
   const filterMovies = (): Movie[] => {
     let filtered = titles.map((title): Movie => ({
@@ -48,36 +47,22 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
       watchLater: false,
       favorited: false
     }));
-
     if (searchTerm) {
       filtered = filtered.filter(movie =>
         movie.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
     if (minYear) filtered = filtered.filter(movie => movie.released >= minYear);
     if (maxYear) filtered = filtered.filter(movie => movie.released <= maxYear);
     if (genres.length > 0) {
       filtered = filtered.filter(movie => genres.includes(movie.genre));
     }
-
     return filtered;
   };
 
+
   const filteredMovies = filterMovies();
   const paginatedMovies = filteredMovies.slice((currentPage - 1) * moviesPerPage, currentPage * moviesPerPage);
-
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter(favId => favId !== id) : [...prev, id]
-    );
-  };
-
-  const toggleWatchLater = (id: string) => {
-    setWatchLater((prev) =>
-      prev.includes(id) ? prev.filter(watchLaterId => watchLaterId !== id) : [...prev, id]
-    );
-  };
 
   const allGenres = Array.from(new Set(titles.map(movie => movie.genre).filter(genre => genre)));
 
@@ -98,16 +83,11 @@ const HomePage: React.FC<HomePageProps> = ({ titles }) => {
 
         <MoviesList
           paginatedMovies={paginatedMovies}
-          favorites={favorites}
-          watchLater={watchLater}
-          onFavoriteToggle={toggleFavorite}
-          onWatchLaterToggle={toggleWatchLater}
         />
 
         <Pagination
-          currentPage={currentPage}
-          totalMovies={filteredMovies.length}
-          onPageChange={setCurrentPage}
+          page={currentPage}
+          setPage={setCurrentPage}
         />
       </div>
     </main>

@@ -21,12 +21,12 @@ export type Question = {
 };
 
 export type Title = {
-  image: string;
   id: string;
   title: string;
   synopsis: string;
   released: number;
   genre: string;
+  image: string;
 };
 
 export type UsersTitle = Title & {

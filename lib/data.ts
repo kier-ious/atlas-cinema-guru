@@ -41,7 +41,7 @@ export async function fetchTitles(
       .where("titles.title", "ilike", `%${query}%`)
       .where("titles.genre", "in", genres)
       .orderBy("titles.title", "asc")
-      .limit(6)
+      .limit(100)
       .offset((page - 1) * 6)
       .execute();
 
@@ -76,7 +76,7 @@ export async function fetchFavorites(page: number, userEmail: string) {
       .innerJoin("favorites", "titles.id", "favorites.title_id")
       .where("favorites.user_id", "=", userEmail)
       .orderBy("titles.released", "asc")
-      .limit(6)
+      .limit(100)
       .offset((page - 1) * 6)
       .execute();
 
@@ -154,7 +154,7 @@ export async function fetchWatchLaters(page: number, userEmail: string) {
       .innerJoin("watchlater", "titles.id", "watchlater.title_id")
       .where("watchlater.user_id", "=", userEmail)
       .orderBy("titles.released", "asc")
-      .limit(6)
+      .limit(100)
       .offset((page - 1) * 6)
       .execute();
 

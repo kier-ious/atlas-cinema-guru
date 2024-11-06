@@ -1,44 +1,72 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Activity {
-  description: string;
-  timestamp: Date;
+    type: string;
+    title: string;
+    timestamp: number;
 }
 
-const ActivityFeed = () => {
-  const [activities, setActivities] = useState<Activity[]>([]);
+export default function ActivityFeed() {
+    const [activities, setActivities] = useState<Activity[]>([]);
 
-  const logActivity = (description: string) => {
-    setActivities((prevActivities) => [
-      { description, timestamp: new Date() },
-      ...prevActivities,
-    ]);
-  };
+    useEffect(() => {
+        const fetchActivities = async () => {
+            try {
+                const response = await fetch('/api/activities');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch activities');
+                }
+                const data = await response.json();
+                setActivities(data.activities);
+            } catch (error) {
+                console.error("Error fetching activities:", error);
+            }
+        };
 
-  return (
-    <div className="bg-[#54F4D0] text-[#00003C] rounded-lg p-4 m-4 shadow-lg">
-      <h4 className="text-xl font-bold mb-3">Activity Feed</h4>
-      <ul className="space-y-2">
-        {activities.length > 0 ? (
-          activities.map((activity, index) => (
-            <li key={index} className="text-sm">
-              <span className="font-medium">
-                {activity.description}
-              </span>{" "}
-              -{" "}
-              <span className="text-gray-600">
-                {activity.timestamp.toLocaleTimeString()}
-              </span>
-            </li>
-          ))
-        ) : (
-          <li className="text-gray-500">No recent activities</li>
-        )}
-      </ul>
-    </div>
-  );
-};
+        fetchActivities();
+    }, []);
 
-export default ActivityFeed;
+    return (
+        <div className="p-4 flex justify-center items-center font-inter">
+            <div className="bg-[#54f4d0] p-4 rounded-md w-full max-w-md">
+                <h3 className="font-bold mb-2 text-center text-[#00003c]">Latest Activities</h3>
+                <ul className="space-y-1 text-sm text-center">
+                    {activities.length > 0 ? (
+                        activities.map((activity, index) => {
+                            const date = new Date(activity.timestamp);
+                            const formattedDate = date.toLocaleString('en-US', {
+                                month: 'numeric',
+                                day: 'numeric',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true,
+                            });
+
+                            if (activity.type === 'removed') {
+                                return null;
+                            }
+
+                            // Determine the message
+                            const message =
+                                activity.type === 'favorite'
+                                    ? `Favorited`
+                                    : `Added`;
+
+                            return (
+                                <li key={index} className="text-[#00003c]">
+                                    <span>{formattedDate}</span> - {message} <strong>{activity.title}</strong> to {activity.type === 'favorite' ? 'Favorites' : 'Watch Later'}
+                                </li>
+                            );
+                        })
+                    ) : (
+                        <li className="text-gray-500">No recent activities</li>
+                    )}
+                </ul>
+            </div>
+        </div>
+    );
+}

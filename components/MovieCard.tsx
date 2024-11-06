@@ -19,10 +19,31 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie, onFavoriteToggle, onWatchLaterToggle }: MovieCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [favorites, setFavorites] = useState<boolean>(movie.favorited);
+  const [watchLater, setWatchLater] = useState<boolean>(movie.watchLater);
+
+  const toggleFavorite = async(id: string) => {
+    setFavorites((prev) =>
+      prev ? (false) : (true)
+    );
+    const response = await fetch(`/api/favorites/${movie.id}`, {
+      method: favorites ?'DELETE' : 'POST'
+    })
+  };
+
+  const toggleWatchLater = async(id: string) => {
+    setWatchLater((prev) =>
+      prev ? (false) : (true)
+    );
+    const response = await fetch(`/api/watch-later/${movie.id}`, {
+      method: watchLater ?'DELETE' : 'GET'
+    })
+  };
+
 
   return (
     <div
-      className="relative overflow-hidden transition-transform transform hover:scale-105 rounded-xl border-2 border-[#54F4D0] p-0"
+      className="relative overflow-hidden transition-transform transform rounded-xl border-2 border-[#54F4D0] p-0"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -47,8 +68,8 @@ const MovieCard = ({ movie, onFavoriteToggle, onWatchLaterToggle }: MovieCardPro
         </div>
       )}
       <div className="absolute top-2 right-2 flex flex-row gap-2">
-        <button onClick={() => onFavoriteToggle(movie.id)}>
-          {movie.favorited ? (
+        <button onClick={() => toggleFavorite(movie.id)}>
+          {favorites ? (
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M10.9307 1.4796C11.4246 -0.0405635 13.5753 -0.0405627 14.0692 1.4796L15.834 6.91106C16.0549 7.5909 16.6884 8.05119 17.4032 8.05119H23.1142C24.7126 8.05119 25.3772 10.0966 24.0841 11.0361L19.4638 14.3929C18.8855 14.8131 18.6435 15.5578 18.8644 16.2376L20.6292 21.6691C21.1231 23.1893 19.3832 24.4534 18.0901 23.5139L13.4698 20.157C12.8915 19.7369 12.1084 19.7369 11.5301 20.157L6.90984 23.5139C5.61671 24.4534 3.87682 23.1893 4.37075 21.6691L6.13554 16.2376C6.35643 15.5578 6.11444 14.8131 5.53614 14.3929L0.915861 11.0361C-0.377266 10.0966 0.287313 8.05119 1.88571 8.05119H7.59669C8.31151 8.05119 8.94503 7.5909 9.16593 6.91106L10.9307 1.4796Z" fill="white"/>
             </svg>
@@ -58,8 +79,8 @@ const MovieCard = ({ movie, onFavoriteToggle, onWatchLaterToggle }: MovieCardPro
             </svg>
           )}
         </button>
-        <button onClick={() => onWatchLaterToggle(movie.id)}>
-          {movie.watchLater ? (
+        <button onClick={() => toggleWatchLater(movie.id)}>
+          {watchLater ? (
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M17 11.3333V17L21.25 21.25M29.75 17C29.75 24.0416 24.0416 29.75 17 29.75C9.95837 29.75 4.25 24.0416 4.25 17C4.25 9.95837 9.95837 4.25 17 4.25C24.0416 4.25 29.75 9.95837 29.75 17Z" fill="white"/>
             </svg>

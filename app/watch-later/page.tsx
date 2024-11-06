@@ -1,77 +1,50 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import MoviesList from "@/components/MoviesList";
+import Pagination from '@/components/Pagination';
+import MovieCard from '@/components/MovieCard';
 
-const WatchLater = () => {
-  const [watchLaterMovies, setWatchLaterMovies] = useState<any[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1); // To handle total pages
 
-  const getImageUrl = (movieId: string) => `/images/${movieId}.webp`;
+interface Movie {
+    id: number;
+    title: string;
+    synopsis: string;
+    released: string;
+    genre: string;
+}
+const WatchLater: React.FC = () => {
+    const [watchLaterMovies, setWatchLaterMovies] = useState<Movie[]>([]);
+    const [page, setPage] = useState<number>(1);
 
-  useEffect(() => {
-    const fetchWatchLater = async () => {
-      try {
-        const response = await fetch(`/api/watchlater?page=${currentPage}`, {
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
+    useEffect(() => {
+        const fetchWatchLaterMovies = async () => {
+            try {
+                const response = await fetch(`/api/watch-later?page=${page}`);
+                if (!response.ok) {
+                    throw new Error(`Error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                setWatchLaterMovies(data.watchLater);
+            } catch (error) {
+                console.error('Error fetching watch later movies:', error);
+            }
+        };
+        fetchWatchLaterMovies();
+    }, [page]);
 
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setWatchLaterMovies(data.watchLater || []);
-        setTotalPages(data.totalPages || 1);
-      } catch (error) {
-        console.error("Failed to fetch watch later movies:", error);
-      }
-    };
-
-    fetchWatchLater();
-  }, [currentPage]);
-
-  const handleToggleWatchLater = async (id: string) => {
-    setWatchLaterMovies((prev) =>
-      prev.some(movie => movie.id === id)
-        ? prev.filter(movie => movie.id !== id)
-        : [...prev, { id }]
+    return (
+        <div className="space-y-6">
+            <h1 className="text-4xl font-bold text-center mb-6 font-inter">Watch Later</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 m-8">
+                {watchLaterMovies.map((movie) => (
+                    <div className="flex justify-center" key={movie.id}>
+                        <MovieCard movie={movie} />
+                    </div>
+                ))}
+            </div>
+            <Pagination page={page} setPage={setPage} />
+        </div>
     );
-  };
-
-  return (
-    <div className="watch-later-page-container min-h-screen text-white py-8 px-4">
-      <h1 className="text-4xl font-bold text-center mb-8">Watch Later</h1>
-
-      <MoviesList
-        paginatedMovies={watchLaterMovies}
-        favorites={[]}
-        watchLater={watchLaterMovies.map(movie => movie.id)}
-        onFavoriteToggle={() => {}}
-        onWatchLaterToggle={handleToggleWatchLater}
-      />
-
-      {/* Pagination Controls */}
-      <div className="pagination-controls flex justify-center mt-8 space-x-4">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          className="bg-teal-500 text-white py-2 px-6 rounded-full hover:bg-teal-400 transition"
-          disabled={currentPage === 1} // Disable if on the first page
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-          className="bg-teal-500 text-white py-2 px-6 rounded-full hover:bg-teal-400 transition"
-          disabled={currentPage === totalPages} 
-        >
-          Next
-        </button>
-      </div>
-    </div>
-  );
 };
 
 export default WatchLater;

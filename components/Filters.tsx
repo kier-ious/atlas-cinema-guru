@@ -23,16 +23,8 @@ const Filters: React.FC<FiltersProps> = ({
   setGenres,
 }) => {
   const allGenres = [
-    'Action',
-    'Comedy',
-    'Drama',
-    'Horror',
-    'Sci-Fi',
-    'Romance',
-    'Thriller',
-    'Fantasy',
-    'Documentary',
-    'Animation',
+    'Romance', 'Horror', 'Drama', 'Action', 'Mystery',
+    'Fantasy', 'Thriller', 'Western', 'Sci-Fi', 'Adventure'
   ];
   const handleGenreClick = (genre: string) => {
     const newGenres = genres.includes(genre)
